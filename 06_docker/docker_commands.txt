@@ -1,0 +1,51 @@
+Docker
+======
+//TEST
+nvidia-docker run -it --rm --name test_sjaeger  -v /home/HSR/sjaeger:/test/ nvidia/cuda bash
+
+//Build Image
+docker build --tag=sjaeger_tensorflow .
+
+//RUN Image
+nvidia-docker run -it --name sjaeger_train_LSTM  -v /home/HSR/sjaeger/ba_machine_learning:/ba_machine_learning/ sjaeger_tensorflow
+
+//Reconnect Container
+docker exec -ti testDocker_sjaeger bash
+
+//Run a test
+python3.6 03_testunits/testunit_2019-05-13_duka_classification.py 
+
+docker ps
+docker ps -a
+docker stop "name"
+docker exec -ti test_sjaeger bash		#reconect to docker
+docker image ls							#List images
+docker rmi "Image Image"				#remove image
+
+docker container ls -a
+docker container rm "cc3f2ff51cab"ls
+
+
+
+HSR CLUSTER
+===========
+
+//SSH VERBINDUNG
+-->vpn
+putt, ssh: shcp0003
+
+
+//TUNNEL
+ssh -L 5937:127.0.0.1:5937 sjaeger@shpc0003
+
+//VNC CLIENT
+localhost:37
+
+
+
+CLUSTER INFOS
+=============
+
+Triber nvidia-smi: 	384.81
+CUda: 				9.0
+CUdnn:				7.6.0

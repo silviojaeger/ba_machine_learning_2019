@@ -1,0 +1,8 @@
+env
+**/.vscode
+.git
+data_temp
+__pycache__
+logs
+logs_archiv
+archiv

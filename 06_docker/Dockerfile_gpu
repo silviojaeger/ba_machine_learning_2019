@@ -1,0 +1,50 @@
+# from https://hub.docker.com/r/nvidia/cuda/
+
+ARG cuda_version=10.0
+ARG cudnn_version=7
+ARG flavor=devel
+FROM nvidia/cuda:${cuda_version}-cudnn${cudnn_version}-${flavor}-ubuntu18.04
+
+#
+# Root user
+#
+
+RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get install -y -q \
+        vim \
+        python3-pip \
+	graphviz \
+	git \
+	curl \
+	wget \
+	psmisc
+
+RUN pip3 install jupyter tensorflow-gpu keras scikit-learn scikit-image sklearn matplotlib pandas seaborn opencv-python opencv-contrib-python imutils pydot pillow numpy imgaug Cython
+RUN pip3 install pycocotools # pycocotools needs Cython to be already installed
+
+EXPOSE 8888
+EXPOSE 6006
+
+RUN groupadd -g 1000 appuser && useradd --create-home -r -u 1000 -g appuser appuser
+# maybe add: --groups video
+
+
+#
+# App User
+#
+USER appuser
+WORKDIR /home/appuser
+RUN mkdir notebooks
+RUN mkdir .jupyter
+COPY jupyter_notebook_config.py .jupyter
+
+# use tensorflow backend
+ENV KERAS_BACKEND=tensorflow
+
+# setup shared folder
+RUN mkdir shared
+WORKDIR /home/appuser/shared
+VOLUME ["/shared"]
+WORKDIR /home/appuser
+
+CMD ["sh", "-c", "jupyter notebook & tensorboard --logdir=notebooks/logs/ "]
+
