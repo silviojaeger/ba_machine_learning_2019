@@ -1,9 +1,9 @@
 # Installation (Windows)
-* ``` git clone https://gitlab.com/regonizer/ba_machine_learning ```
-* ``` cd .\ba_machine_learning\study ```
+* ``` git clone https://github.com/silviojaeger/ba_machine_learning_2019 ```
+* ``` cd .\ba_machine_learning_2019 ```
 * ``` setup.ps1 ```
 * Setup VSCode (Optional)
-  * Open Folder ``` .\study ```
+  * Open Folder ``` ba_machine_learning_2019 ```
   * Select Interpreter: 
     <kbd>command</kbd> + <kbd>shift</kbd> + <kbd>P</kbd>
     execute ``` Python: Select Interpreter ``` 
